@@ -1,4 +1,6 @@
-{lib}: rec {
+{lib}: let
+  debug = import ./lib/debug.nix;
+in rec {
   tests = import ./lib/tests {inherit lib;};
-  allTestsPass = builtins.all (x: x == []) (builtins.attrValues tests);
+  allTestsPass = debug.checkAllListsEmpty tests;
 }
